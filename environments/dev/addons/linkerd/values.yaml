@@ -3,17 +3,7 @@
 # Single replica for dev environment
 controllerReplicas: 1
 
-# Disable External Secrets for dev - use automatic certificate generation
-certificates:
-  externalSecrets:
-    enabled: false
-  bootstrap:
-    enabled: false  # Not needed for dev with automatic certificates
-  rotation:
-    enabled: false  # Not needed for dev with automatic certificates
-
-# Use automatic certificate generation for dev - inherit from default externalCA: true
-# No identity section needed - use defaults
+# Use Linkerd defaults for certificate management in dev environment
 
 # Lower resource requirements for dev
 resources:

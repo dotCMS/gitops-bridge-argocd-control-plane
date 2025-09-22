@@ -1,25 +1,7 @@
 # Linkerd Control Plane Default Configuration
 
-# Identity and certificates - Working configuration for dev
-# Leave identity configuration minimal to use Linkerd defaults
-
-# Certificate management - Default to automatic generation
-# Override in production environments for External Secrets
-certificates:
-  externalSecrets:
-    enabled: false  # Default to automatic certificates
-    secretName: "linkerd-certificates"  # AWS Secrets Manager secret name
-
-  # Bootstrap job to create initial certificates
-  bootstrap:
-    enabled: false  # Default disabled, enable in production
-    version: "v1"  # Increment to force regeneration
-
-  # Automated certificate rotation
-  rotation:
-    enabled: false  # Default disabled, enable in production
-    serviceAccount:
-      roleArn: ""  # Will be set by ApplicationSet from cluster metadata
+# Use minimal configuration - let Linkerd use its defaults
+# Don't override identity or certificate settings
 
 # AWS configuration (will be provided by ApplicationSet)
 aws:

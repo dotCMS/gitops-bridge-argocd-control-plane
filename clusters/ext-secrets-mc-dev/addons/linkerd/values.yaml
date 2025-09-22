@@ -3,16 +3,7 @@
 # Override ApplicationSet inline values for dev environment
 # Ensure dev uses automatic certificate generation, not external secrets
 
-certificates:
-  externalSecrets:
-    enabled: false  # Force disable External Secrets for dev
-  bootstrap:
-    enabled: false  # Not needed for dev
-  rotation:
-    enabled: false  # Not needed for dev
-
-# Use automatic certificate generation - inherit from default externalCA: true
-# No identity configuration needed
+# Use Linkerd defaults for dev cluster
 
 # Disable any certificate-related configurations from ApplicationSet
 aws: {}
