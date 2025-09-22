@@ -1,7 +1,11 @@
 # Linkerd Control Plane Default Configuration
 
-# Use minimal configuration - let Linkerd use its defaults
-# Don't override identity or certificate settings
+# Use external secret management for security
+identity:
+  issuer:
+    scheme: kubernetes.io/tls  # Reference external secret
+    clockSkewAllowance: 20s
+    issuanceLifetime: 24h0m0s
 
 # AWS configuration (will be provided by ApplicationSet)
 aws:
