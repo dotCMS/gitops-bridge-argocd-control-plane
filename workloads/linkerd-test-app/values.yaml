@@ -1,0 +1,75 @@
+# Default values for linkerd-test-app
+# This test application demonstrates Linkerd service mesh features
+
+environment: default
+region: us-west-2
+cluster_name: ""
+
+# Application configuration
+app:
+  name: linkerd-test-app
+  namespace: linkerd-test
+
+# Frontend service configuration
+frontend:
+  name: frontend
+  replicaCount: 2
+  image:
+    repository: nginx
+    tag: "1.25-alpine"
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+  
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+# Backend service configuration  
+backend:
+  name: backend
+  replicaCount: 2
+  image:
+    repository: httpbin/httpbin
+    tag: "latest" 
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    port: 8080
+    targetPort: 80
+  
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+# Linkerd configuration
+linkerd:
+  # Inject Linkerd sidecar
+  inject: true
+  
+  # Traffic split for demo (optional)
+  trafficSplit:
+    enabled: false
+
+# Load testing configuration
+loadTest:
+  enabled: true
+  image:
+    repository: curlimages/curl
+    tag: "8.5.0"
+  
+  # Test configuration
+  requests: 10
+  concurrency: 2

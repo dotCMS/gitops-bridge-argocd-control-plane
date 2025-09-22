@@ -1,0 +1,83 @@
+{{- if .Values.loadTest.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "linkerd-test-app.name" . }}-load-test
+  namespace: {{ .Values.app.namespace }}
+  labels:
+    {{- include "linkerd-test-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: load-test
+  annotations:
+    {{- if .Values.linkerd.inject }}
+    linkerd.io/inject: enabled
+    {{- end }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "linkerd-test-app.labels" . | nindent 8 }}
+        app.kubernetes.io/component: load-test
+      annotations:
+        {{- if .Values.linkerd.inject }}
+        linkerd.io/inject: enabled
+        {{- end }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: curl
+        image: "{{ .Values.loadTest.image.repository }}:{{ .Values.loadTest.image.tag }}"
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - |
+            echo "🔗 Starting Linkerd Test App Load Test"
+            echo "Frontend URL: http://{{ include "linkerd-test-app.name" . }}-frontend"
+            echo "Backend URL: http://{{ include "linkerd-test-app.name" . }}-backend:{{ .Values.backend.service.port }}"
+            echo ""
+
+            # Wait for services to be ready
+            echo "Waiting for services to be ready..."
+            sleep 30
+
+            # Test frontend
+            echo "Testing frontend service..."
+            for i in $(seq 1 {{ .Values.loadTest.requests }}); do
+              echo "Frontend request $i:"
+              curl -s -w "Status: %{http_code}, Time: %{time_total}s\n" \
+                http://{{ include "linkerd-test-app.name" . }}-frontend/health || echo "Failed"
+              sleep 1
+            done
+
+            echo ""
+            echo "Testing backend service directly..."
+            for i in $(seq 1 {{ .Values.loadTest.requests }}); do
+              echo "Backend request $i:"
+              curl -s -w "Status: %{http_code}, Time: %{time_total}s\n" \
+                http://{{ include "linkerd-test-app.name" . }}-backend:{{ .Values.backend.service.port }}/status || echo "Failed"
+              sleep 1
+            done
+
+            echo ""
+            echo "Testing frontend -> backend communication..."
+            for i in $(seq 1 {{ .Values.loadTest.requests }}); do
+              echo "Frontend->Backend request $i:"
+              curl -s -w "Status: %{http_code}, Time: %{time_total}s\n" \
+                http://{{ include "linkerd-test-app.name" . }}-frontend/api/status || echo "Failed"
+              sleep 1
+            done
+
+            echo ""
+            echo "🎉 Load test completed!"
+            echo "Check Linkerd metrics with:"
+            echo "  linkerd viz -n {{ .Values.app.namespace }} stat deploy"
+            echo "  linkerd viz -n {{ .Values.app.namespace }} top deploy"
+            echo "  linkerd viz dashboard"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 50m
+            memory: 32Mi
+  backoffLimit: 3
+{{- end }}

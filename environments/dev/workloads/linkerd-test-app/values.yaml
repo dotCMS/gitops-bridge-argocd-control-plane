@@ -1,0 +1,37 @@
+# Linkerd Test App - Development Environment
+
+environment: dev
+region: us-west-2
+
+# Lower resource requirements for dev
+frontend:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
+    requests:
+      cpu: 50m
+      memory: 32Mi
+
+backend:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
+    requests:
+      cpu: 50m
+      memory: 32Mi
+
+# Enable load testing in dev
+loadTest:
+  enabled: true
+  requests: 5    # Lower number for dev
+  concurrency: 1
+
+# Linkerd configuration for dev
+linkerd:
+  inject: true
+  trafficSplit:
+    enabled: false  # Keep simple for dev

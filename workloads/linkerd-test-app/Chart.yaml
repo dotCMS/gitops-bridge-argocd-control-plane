@@ -1,0 +1,16 @@
+apiVersion: v2
+name: linkerd-test-app
+description: Test application for demonstrating Linkerd service mesh features
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+keywords:
+  - linkerd
+  - test
+  - demo
+  - mtls
+  - service-mesh
+maintainers:
+  - name: Platform Team
+    email: platform@dotcms.com
