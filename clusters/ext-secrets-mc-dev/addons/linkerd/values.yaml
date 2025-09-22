@@ -1,0 +1,23 @@
+# Cluster-specific Linkerd configuration for ext-secrets-mc-dev
+
+# Override ApplicationSet inline values for dev environment
+# Ensure dev uses automatic certificate generation, not external secrets
+
+certificates:
+  externalSecrets:
+    enabled: false  # Force disable External Secrets for dev
+  bootstrap:
+    enabled: false  # Not needed for dev
+  rotation:
+    enabled: false  # Not needed for dev
+
+# Ensure automatic certificate generation is used
+identity:
+  issuer:
+    scheme: linkerd.io/tls  # Use automatic certificate generation
+    clockSkewAllowance: 20s
+    issuanceLifetime: 24h0m0s
+
+# Disable any certificate-related configurations from ApplicationSet
+aws: {}
+environment: dev
