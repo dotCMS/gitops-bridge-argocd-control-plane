@@ -1,0 +1,40 @@
+# Simple Cluster Test App - Default Configuration
+
+environment: dev
+region: us-west-2
+cluster_name: ""
+
+# Application configuration
+app:
+  name: cluster-test-app
+  namespace: test-apps
+
+# Simple web application
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: "1.25-alpine"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+
+# Linkerd injection (enabled but not the focus)
+linkerd:
+  inject: true
+
+# NodePort service for easy external access
+nodePort:
+  enabled: false
+  port: 30080
