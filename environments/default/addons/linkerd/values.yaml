@@ -1,0 +1,43 @@
+# Linkerd Control Plane Default Configuration
+
+# Identity and certificates
+identity:
+  issuer:
+    scheme: kubernetes.io/tls
+
+# High availability configuration
+controllerReplicas: 1  # Will be overridden in staging/prod
+
+# Resource configuration
+resources:
+  cpu:
+    limit: 1
+    request: 100m
+  memory:
+    limit: 250Mi
+    request: 50Mi
+
+# Proxy configuration
+proxy:
+  resources:
+    cpu:
+      limit: 1
+      request: 100m
+    memory:
+      limit: 250Mi
+      request: 20Mi
+
+# Enable default policy mode (recommended for security)
+policyController:
+  defaultPolicy: "deny"
+
+# Observability integration
+# These will integrate with your existing Prometheus/Grafana
+prometheusUrl: ""  # Set by ApplicationSet
+grafanaUrl: ""     # Set by ApplicationSet
+
+# Debug configuration for development
+debugContainer:
+  image:
+    name: cr.l5d.io/linkerd/debug
+    pullPolicy: Always

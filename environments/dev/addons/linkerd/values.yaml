@@ -1,0 +1,33 @@
+# Linkerd Control Plane - Development Environment
+
+# Single replica for dev environment
+controllerReplicas: 1
+
+# Lower resource requirements for dev
+resources:
+  cpu:
+    limit: 500m
+    request: 50m
+  memory:
+    limit: 128Mi
+    request: 32Mi
+
+# Proxy sidecar resources for dev
+proxy:
+  resources:
+    cpu:
+      limit: 500m
+      request: 50m
+    memory:
+      limit: 128Mi
+      request: 16Mi
+
+# Enable debug features for development
+debugContainer:
+  image:
+    name: cr.l5d.io/linkerd/debug
+    pullPolicy: Always
+
+# Policy controller for dev (permissive for easier development)
+policyController:
+  defaultPolicy: "allow"  # More permissive in dev

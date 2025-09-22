@@ -1,0 +1,27 @@
+# Linkerd Control Plane - Staging Environment
+
+# High availability for staging
+controllerReplicas: 2
+
+# Production-like resources for staging
+resources:
+  cpu:
+    limit: 1
+    request: 100m
+  memory:
+    limit: 250Mi
+    request: 50Mi
+
+# Proxy sidecar resources for staging
+proxy:
+  resources:
+    cpu:
+      limit: 1
+      request: 100m
+    memory:
+      limit: 250Mi
+      request: 20Mi
+
+# Security policy for staging (more restrictive)
+policyController:
+  defaultPolicy: "deny"

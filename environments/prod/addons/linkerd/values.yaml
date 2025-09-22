@@ -1,0 +1,37 @@
+# Linkerd Control Plane - Production Environment
+
+# High availability for production
+controllerReplicas: 3
+
+# Full production resources
+resources:
+  cpu:
+    limit: 2
+    request: 200m
+  memory:
+    limit: 512Mi
+    request: 100Mi
+
+# Proxy sidecar resources for production
+proxy:
+  resources:
+    cpu:
+      limit: 2
+      request: 100m
+    memory:
+      limit: 512Mi
+      request: 32Mi
+
+# Strict security policy for production
+policyController:
+  defaultPolicy: "deny"
+
+# Enhanced monitoring for production
+# Additional scrape configs for detailed metrics
+prometheus:
+  scrapeConfigs:
+    - job_name: 'linkerd-controller'
+      kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names: ['linkerd', 'linkerd-viz']
