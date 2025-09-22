@@ -3,11 +3,10 @@
 # Single replica for dev environment
 controllerReplicas: 1
 
-# External Secrets certificate management for dev
-certificates:
-  externalSecrets:
-    enabled: true
-    secretName: linkerd-certificates-dev
+# Use built-in certificate generation for dev
+# certificates:
+#   externalSecrets:
+#     enabled: false
 
 # Lower resource requirements for dev
 resources:
