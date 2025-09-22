@@ -1,0 +1,15 @@
+# Placeholder secret for dev environment with automatic certificate generation
+# This secret will be replaced by Linkerd's automatic certificate management
+apiVersion: v1
+kind: Secret
+metadata:
+  name: linkerd-identity-issuer
+  namespace: linkerd
+  labels:
+    linkerd.io/control-plane-component: identity
+    linkerd.io/control-plane-ns: linkerd
+type: kubernetes.io/tls
+data:
+  # Placeholder values - will be replaced by Linkerd automatic certificate generation
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t  # placeholder
+  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0t  # placeholder

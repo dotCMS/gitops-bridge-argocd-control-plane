@@ -4,6 +4,7 @@
 identity:
   externalCA: true  # Use external CA to skip manual certificate requirement
   issuer:
+    scheme: kubernetes.io/tls  # Use external secret management
     clockSkewAllowance: 20s
     issuanceLifetime: 24h0m0s
 
