@@ -8,6 +8,10 @@ certificates:
   externalSecrets:
     enabled: true
     secretName: "linkerd-certificates-prod"
+  bootstrap:
+    enabled: true  # Enable certificate bootstrap for production
+  rotation:
+    enabled: true  # Enable certificate rotation for production
 
 # Full production resources
 resources:

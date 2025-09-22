@@ -7,20 +7,21 @@ identity:
     clockSkewAllowance: 20s
     issuanceLifetime: 24h0m0s
 
-# Certificate management via External Secrets
+# Certificate management - Default to automatic generation
+# Override in production environments for External Secrets
 certificates:
   externalSecrets:
-    enabled: true  # Enable for production environments
+    enabled: false  # Default to automatic certificates
     secretName: "linkerd-certificates"  # AWS Secrets Manager secret name
 
   # Bootstrap job to create initial certificates
   bootstrap:
-    enabled: true  # Will check if certificates exist before creating
+    enabled: false  # Default disabled, enable in production
     version: "v1"  # Increment to force regeneration
 
   # Automated certificate rotation
   rotation:
-    enabled: true  # Enable monthly certificate rotation
+    enabled: false  # Default disabled, enable in production
     serviceAccount:
       roleArn: ""  # Will be set by ApplicationSet from cluster metadata
 

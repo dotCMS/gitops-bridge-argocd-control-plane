@@ -59,19 +59,6 @@ spec:
               # Integration with existing Prometheus
               prometheusUrl: "http://kube-prometheus-stack-prometheus.kube-prometheus-stack.svc.cluster.local:9090"
               grafanaUrl: "http://kube-prometheus-stack-grafana.kube-prometheus-stack.svc.cluster.local"
-
-              # AWS configuration for External Secrets and certificate management
-              aws:
-                region: "{{metadata.annotations.aws_region}}"
-
-              # Environment configuration
-              environment: "{{metadata.labels.environment}}"
-
-              # Certificate rotation service account role
-              certificates:
-                rotation:
-                  serviceAccount:
-                    roleArn: "arn:aws:iam::{{metadata.annotations.aws_account_id}}:role/{{name}}-linkerd-cert-rotation"
       destination:
         namespace: '{{values.addonChartRepositoryNamespace}}'
         name: '{{name}}'

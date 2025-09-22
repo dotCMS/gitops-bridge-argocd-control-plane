@@ -8,6 +8,10 @@ certificates:
   externalSecrets:
     enabled: true
     secretName: "linkerd-certificates-staging"
+  bootstrap:
+    enabled: true  # Enable certificate bootstrap for staging
+  rotation:
+    enabled: true  # Enable certificate rotation for staging
 
 # Production-like resources for staging
 resources:
