@@ -1,9 +1,9 @@
 # Linkerd Control Plane Default Configuration
 
-# Identity and certificates - Automatic generation by default
+# Identity and certificates - Use external CA for automatic generation
 identity:
+  externalCA: true  # Use external CA to skip manual certificate requirement
   issuer:
-    scheme: linkerd.io/tls  # Use automatic certificate generation by default
     clockSkewAllowance: 20s
     issuanceLifetime: 24h0m0s
 

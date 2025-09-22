@@ -3,10 +3,13 @@
 # High availability for production
 controllerReplicas: 3
 
-# Override default automatic certificates with External Secrets
+# Override default to use External Secrets
 identity:
+  externalCA: false  # Use internal CA with external secret management
   issuer:
     scheme: kubernetes.io/tls  # Use manual certificate management
+    clockSkewAllowance: 20s
+    issuanceLifetime: 24h0m0s
 
 # Use External Secrets for certificate management
 certificates:
@@ -40,26 +43,3 @@ proxy:
 # Strict security policy for production
 policyController:
   defaultPolicy: "deny"
-
-# Production certificate management with cert-manager
-identity:
-  issuer:
-    scheme: linkerd.io/tls  # Use Linkerd's issuer with cert-manager
-    clockSkewAllowance: 20s
-    issuanceLifetime: 24h0m0s
-  
-  # Production-grade certificate configuration
-  # These should be managed via cert-manager ClusterIssuer
-  trustAnchorsPEM: |
-    # Root CA certificate from your organization's PKI
-    # This should be provided by your certificate management team
-
-# Enhanced monitoring for production
-# Additional scrape configs for detailed metrics
-prometheus:
-  scrapeConfigs:
-    - job_name: 'linkerd-controller'
-      kubernetes_sd_configs:
-      - role: pod
-        namespaces:
-          names: ['linkerd', 'linkerd-viz']
