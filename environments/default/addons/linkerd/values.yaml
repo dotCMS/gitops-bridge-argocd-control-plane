@@ -1,12 +1,7 @@
 # Linkerd Control Plane Default Configuration
 
-# Identity and certificates - Use external CA for automatic generation
-identity:
-  externalCA: true  # Use external CA to skip manual certificate requirement
-  issuer:
-    scheme: kubernetes.io/tls  # Use external secret management
-    clockSkewAllowance: 20s
-    issuanceLifetime: 24h0m0s
+# Identity and certificates - Working configuration for dev
+# Leave identity configuration minimal to use Linkerd defaults
 
 # Certificate management - Default to automatic generation
 # Override in production environments for External Secrets
