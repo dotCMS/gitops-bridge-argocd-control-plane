@@ -108,15 +108,7 @@ data:
             <div class="status-card" style="border-left-color: #2196F3;">
                 <strong>🔗 Linkerd Service Mesh Enabled</strong>
                 <p>This application is automatically protected with mTLS encryption and observability.</p>
-                <p><strong>Commands to check Linkerd status:</strong></p>
-                <pre style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 5px; margin: 10px 0; overflow-x: auto;"><code># Check Linkerd injection
-kubectl get pods -n {{ .Values.app.namespace }} -o wide
-
-# View Linkerd stats  
-linkerd viz -n {{ .Values.app.namespace }} stat deploy
-
-# Open Linkerd dashboard
-linkerd viz dashboard</code></pre>
+                <p>Use kubectl and linkerd CLI to explore the service mesh features.</p>
             </div>
             {{- end }}
 
