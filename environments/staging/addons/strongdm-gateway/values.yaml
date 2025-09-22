@@ -1,0 +1,23 @@
+# strongDM Gateway - Staging Environment Overrides
+
+# Staging-specific configuration
+environment: staging
+
+# Gateway configuration for staging
+gateway:
+  replicas: 2  # High availability for staging
+  
+  # Production-like resources for staging
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+# Staging environment settings
+strongdm:
+  cluster_endpoint: ""  # Set by ApplicationSet template
+  admin_token_secret: "strongdm-admin-token"
+  relay_token_secret: "strongdm-relay-token"

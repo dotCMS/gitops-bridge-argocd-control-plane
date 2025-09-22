@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: strongdm-gateway
+  namespace: strongdm-system
+  labels:
+    app.kubernetes.io/name: strongdm-gateway
+    app.kubernetes.io/instance: {{ .Values.environment }}
+    app.kubernetes.io/component: security
+  annotations:
+    {{- range $key, $value := .Values.gateway.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  type: {{ .Values.gateway.service.type }}
+  selector:
+    app.kubernetes.io/name: strongdm-gateway
+    app.kubernetes.io/instance: {{ .Values.environment }}
+  ports:
+    {{- range .Values.gateway.service.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+      protocol: TCP
+    {{- end }}
+  # Preserve client source IP
+  externalTrafficPolicy: Local
+---
+# Internal service for health checks
+apiVersion: v1
+kind: Service
+metadata:
+  name: strongdm-gateway-internal
+  namespace: strongdm-system
+  labels:
+    app.kubernetes.io/name: strongdm-gateway
+    app.kubernetes.io/instance: {{ .Values.environment }}
+    app.kubernetes.io/component: security
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: strongdm-gateway
+    app.kubernetes.io/instance: {{ .Values.environment }}
+  ports:
+  - name: health
+    port: 5432
+    targetPort: 5432
+    protocol: TCP

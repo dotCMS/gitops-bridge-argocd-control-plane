@@ -1,0 +1,34 @@
+# strongDM Gateway - Production Environment Overrides
+
+# Production-specific configuration
+environment: prod
+
+# Gateway configuration for production
+gateway:
+  replicas: 3  # High availability with 3 replicas for production
+  
+  # Full production resources
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "400m"
+      
+  # Enhanced security for production
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop: ["ALL"]
+
+# Production environment settings
+strongdm:
+  cluster_endpoint: ""  # Set by ApplicationSet template
+  admin_token_secret: "strongdm-admin-token"
+  relay_token_secret: "strongdm-relay-token"

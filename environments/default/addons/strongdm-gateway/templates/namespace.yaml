@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: strongdm-system
+  labels:
+    name: strongdm-system
+    app.kubernetes.io/name: strongdm-gateway
+    app.kubernetes.io/instance: {{ .Values.environment }}
+    app.kubernetes.io/component: security
+    app.kubernetes.io/part-of: gitops-bridge

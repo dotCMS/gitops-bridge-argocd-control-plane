@@ -1,0 +1,15 @@
+apiVersion: v2
+name: strongdm-gateway
+description: strongDM Gateway for secure access to EKS cluster
+type: application
+version: 1.0.0
+appVersion: "latest"
+keywords:
+  - strongdm
+  - security
+  - access
+  - gateway
+  - zero-trust
+maintainers:
+  - name: Platform Team
+    email: platform@dotcms.com
