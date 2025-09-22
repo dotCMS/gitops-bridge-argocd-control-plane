@@ -10,7 +10,7 @@ spec:
     - clusters:
         values:
           addonChart: linkerd-crds
-          addonChartVersion: 1.8.0
+          addonChartVersion: 1.16.11
           addonChartRepositoryNamespace: linkerd
           addonChartRepository: https://helm.linkerd.io/stable
         selector:

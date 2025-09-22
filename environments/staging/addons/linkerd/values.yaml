@@ -3,6 +3,12 @@
 # High availability for staging
 controllerReplicas: 2
 
+# Use External Secrets for certificate management
+certificates:
+  externalSecrets:
+    enabled: true
+    secretName: "linkerd-certificates-staging"
+
 # Production-like resources for staging
 resources:
   cpu:

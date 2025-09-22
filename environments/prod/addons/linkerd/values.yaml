@@ -3,6 +3,12 @@
 # High availability for production
 controllerReplicas: 3
 
+# Use External Secrets for certificate management
+certificates:
+  externalSecrets:
+    enabled: true
+    secretName: "linkerd-certificates-prod"
+
 # Full production resources
 resources:
   cpu:

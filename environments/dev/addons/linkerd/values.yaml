@@ -3,10 +3,21 @@
 # Single replica for dev environment
 controllerReplicas: 1
 
-# Use built-in certificate generation for dev
-# certificates:
-#   externalSecrets:
-#     enabled: false
+# Disable External Secrets for dev - use automatic certificate generation
+certificates:
+  externalSecrets:
+    enabled: false
+  bootstrap:
+    enabled: false  # Not needed for dev with automatic certificates
+  rotation:
+    enabled: false  # Not needed for dev with automatic certificates
+
+# Use automatic certificate generation for dev
+identity:
+  issuer:
+    scheme: linkerd.io/tls
+    clockSkewAllowance: 20s
+    issuanceLifetime: 24h0m0s
 
 # Lower resource requirements for dev
 resources:

@@ -1,11 +1,35 @@
 # Linkerd Control Plane Default Configuration
 
-# Identity and certificates - Manual certificate configuration
+# Identity and certificates - External Secrets configuration for production
 identity:
   issuer:
     scheme: kubernetes.io/tls
     clockSkewAllowance: 20s
     issuanceLifetime: 24h0m0s
+
+# Certificate management via External Secrets
+certificates:
+  externalSecrets:
+    enabled: true  # Enable for production environments
+    secretName: "linkerd-certificates"  # AWS Secrets Manager secret name
+
+  # Bootstrap job to create initial certificates
+  bootstrap:
+    enabled: true  # Will check if certificates exist before creating
+    version: "v1"  # Increment to force regeneration
+
+  # Automated certificate rotation
+  rotation:
+    enabled: true  # Enable monthly certificate rotation
+    serviceAccount:
+      roleArn: ""  # Will be set by ApplicationSet from cluster metadata
+
+# AWS configuration (will be provided by ApplicationSet)
+aws:
+  region: ""  # Will be set by ApplicationSet
+
+# Environment (will be provided by ApplicationSet)
+environment: ""  # Will be set by ApplicationSet
 
 # High availability configuration
 controllerReplicas: 1  # Will be overridden in staging/prod
