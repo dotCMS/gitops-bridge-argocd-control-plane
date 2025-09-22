@@ -3,6 +3,11 @@
 # High availability for staging
 controllerReplicas: 2
 
+# Override default automatic certificates with External Secrets
+identity:
+  issuer:
+    scheme: kubernetes.io/tls  # Use manual certificate management
+
 # Use External Secrets for certificate management
 certificates:
   externalSecrets:

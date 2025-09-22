@@ -1,9 +1,9 @@
 # Linkerd Control Plane Default Configuration
 
-# Identity and certificates - External Secrets configuration for production
+# Identity and certificates - Automatic generation by default
 identity:
   issuer:
-    scheme: kubernetes.io/tls
+    scheme: linkerd.io/tls  # Use automatic certificate generation by default
     clockSkewAllowance: 20s
     issuanceLifetime: 24h0m0s
 
