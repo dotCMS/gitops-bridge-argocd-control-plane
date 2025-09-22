@@ -1,11 +1,18 @@
 # strongDM Gateway - Staging Environment Overrides
 
-# Staging-specific configuration
+# Staging-specific configuration  
 environment: staging
 
-# Gateway configuration for staging
-gateway:
-  replicas: 2  # High availability for staging
+# Configuration for official sdm-relay chart
+sdm-relay:
+  # Gateway/Relay configuration for staging environment
+  relay:
+    name: "eks-gateway-staging"
+    advertisedHost: ""  # Auto-configured by LoadBalancer  
+    advertisedPort: 5432
+    
+  # High availability for staging
+  replicaCount: 2
   
   # Production-like resources for staging
   resources:
@@ -16,8 +23,12 @@ gateway:
       memory: "256Mi"
       cpu: "200m"
 
-# Staging environment settings
-strongdm:
-  cluster_endpoint: ""  # Set by ApplicationSet template
-  admin_token_secret: "strongdm-admin-token"
-  relay_token_secret: "strongdm-relay-token"
+# External Secrets configuration for staging environment
+externalSecrets:
+  enabled: true
+  gatewayToken:
+    provider:
+      aws:
+        region: "us-west-2"
+        secretName: "strongdm-gateway-tokens-staging"
+        key: "gateway-token"

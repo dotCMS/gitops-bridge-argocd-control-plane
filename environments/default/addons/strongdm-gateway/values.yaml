@@ -1,40 +1,56 @@
-# strongDM Gateway Default Configuration
-gateway:
-  replicas: 2
-  image:
-    repository: strongdm/relay
-    tag: "latest"
-    pullPolicy: Always
+# strongDM Gateway Configuration using official strongDM Helm chart
+# References: https://helm.strongdm.com/stable/
+
+# Configuration for the official sdm-relay Helm chart
+sdm-relay:
+  # Gateway/Relay configuration
+  relay:
+    name: "eks-gateway"  # Will be overridden by environment-specific values
     
+  # Token management via External Secrets
+  tokenSecretName: "strongdm-gateway-token"
+  tokenSecretKey: "token"
+  
+  # Network configuration
+  service:
+    type: LoadBalancer
+    port: 5432
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+      
   # Resource requirements
   resources:
     requests:
       memory: "128Mi"
       cpu: "100m"
     limits:
-      memory: "256Mi"
+      memory: "256Mi" 
       cpu: "200m"
       
-  # Network configuration
-  service:
-    type: LoadBalancer
-    annotations:
-      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
-      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-      service.beta.kubernetes.io/aws-load-balancer-scheme: internal
-    ports:
-      - name: strongdm
-        port: 5432
-        targetPort: 5432
-        
+  # High availability
+  replicaCount: 1
+  
   # Security context
   securityContext:
     runAsNonRoot: true
     runAsUser: 1000
-    runAsGroup: 1000
     fsGroup: 1000
 
-# strongDM specific configuration
-strongdm:
-  admin_token_secret: "strongdm-admin-token"
-  relay_token_secret: "strongdm-relay-token"
+# External Secrets integration for strongDM token management
+externalSecrets:
+  enabled: true
+  gatewayToken:
+    # External Secret for strongDM gateway token
+    name: "strongdm-gateway-token"
+    # Target secret that sdm-relay chart will consume
+    secretName: "strongdm-gateway-token"
+    secretKey: "token"
+    # AWS Secrets Manager configuration (populated by ApplicationSet)
+    provider:
+      aws:
+        region: ""  # Will be set by ApplicationSet template
+        secretName: ""  # Will be set by ApplicationSet template (e.g., "strongdm-gateway-tokens-dev")
+        key: "gateway-token"
+    refreshInterval: "5m"

@@ -1,15 +1,22 @@
 apiVersion: v2
 name: strongdm-gateway
-description: strongDM Gateway for secure access to EKS cluster
+description: strongDM Gateway for secure EKS cluster access using official strongDM Helm chart
 type: application
 version: 1.0.0
-appVersion: "latest"
+
+# Use official strongDM Helm chart as dependency
+dependencies:
+  - name: sdm-relay
+    version: "1.2.0"  # Use latest stable version
+    repository: "https://helm.strongdm.com/stable/"
+
 keywords:
   - strongdm
   - security
   - access
   - gateway
   - zero-trust
+  - relay
 maintainers:
   - name: Platform Team
     email: platform@dotcms.com

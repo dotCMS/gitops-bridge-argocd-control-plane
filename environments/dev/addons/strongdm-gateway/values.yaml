@@ -3,9 +3,17 @@
 # Development-specific configuration
 environment: dev
 
-# Gateway configuration for dev
-gateway:
-  replicas: 1  # Single replica for dev to save costs
+# Configuration for official sdm-relay chart
+sdm-relay:
+  # Gateway/Relay configuration for dev environment
+  relay:
+    name: "eks-gateway-dev"
+    # Advertised host will be set by the LoadBalancer service
+    advertisedHost: ""  # Auto-configured by LoadBalancer
+    advertisedPort: 5432
+    
+  # Single replica for dev to save costs
+  replicaCount: 1
   
   # Lower resource requirements for dev
   resources:
@@ -16,9 +24,12 @@ gateway:
       memory: "128Mi"
       cpu: "100m"
 
-# Development environment settings
-strongdm:
-  # These will be populated by the infrastructure deployment
-  cluster_endpoint: ""  # Set by ApplicationSet template
-  admin_token_secret: "strongdm-admin-token"
-  relay_token_secret: "strongdm-relay-token"
+# External Secrets configuration for dev environment  
+externalSecrets:
+  enabled: true
+  gatewayToken:
+    provider:
+      aws:
+        region: "us-west-2"  # Set by ApplicationSet but override for dev
+        secretName: "strongdm-gateway-tokens-dev"
+        key: "gateway-token"

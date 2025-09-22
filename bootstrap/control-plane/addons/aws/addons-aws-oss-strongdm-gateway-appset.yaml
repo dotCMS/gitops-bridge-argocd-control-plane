@@ -33,6 +33,7 @@ spec:
           helm:
             releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
+            skipDeps: false  # Allow Helm dependency downloads
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
@@ -41,8 +42,14 @@ spec:
               environment: '{{metadata.labels.environment}}'
               region: '{{metadata.annotations.aws_region}}'
               cluster_name: '{{name}}'
-              strongdm:
-                cluster_endpoint: '{{metadata.annotations.cluster_endpoint}}'
+              
+              # Override environment-specific gateway token secret name
+              externalSecrets:
+                gatewayToken:
+                  provider:
+                    aws:
+                      region: '{{metadata.annotations.aws_region}}'
+                      secretName: 'strongdm-gateway-tokens-{{metadata.labels.environment}}'
       destination:
         namespace: strongdm-system
         name: '{{name}}'

@@ -3,15 +3,22 @@
 # Production-specific configuration
 environment: prod
 
-# Gateway configuration for production
-gateway:
-  replicas: 3  # High availability with 3 replicas for production
+# Configuration for official sdm-relay chart
+sdm-relay:
+  # Gateway/Relay configuration for production environment
+  relay:
+    name: "eks-gateway-prod"
+    advertisedHost: ""  # Auto-configured by LoadBalancer
+    advertisedPort: 5432
+    
+  # High availability with 3 replicas for production
+  replicaCount: 3
   
   # Full production resources
   resources:
     requests:
       memory: "256Mi"
-      cpu: "200m"
+      cpu: "200m" 
     limits:
       memory: "512Mi"
       cpu: "400m"
@@ -27,8 +34,12 @@ gateway:
     capabilities:
       drop: ["ALL"]
 
-# Production environment settings
-strongdm:
-  cluster_endpoint: ""  # Set by ApplicationSet template
-  admin_token_secret: "strongdm-admin-token"
-  relay_token_secret: "strongdm-relay-token"
+# External Secrets configuration for production environment
+externalSecrets:
+  enabled: true
+  gatewayToken:
+    provider:
+      aws:
+        region: "us-west-2"
+        secretName: "strongdm-gateway-tokens-prod"
+        key: "gateway-token"
