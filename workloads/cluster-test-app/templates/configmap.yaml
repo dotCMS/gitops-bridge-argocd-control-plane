@@ -110,7 +110,7 @@ data:
                 <p>This application is automatically protected with mTLS encryption and observability.</p>
                 <p><strong>Commands to check Linkerd status:</strong></p>
                 <pre style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 5px; margin: 10px 0; overflow-x: auto;"><code># Check Linkerd injection
-kubectl get pods -n {{ .Values.app.namespace }} -o jsonpath='{{`{.items[*].spec.containers[*].name}`}}'
+kubectl get pods -n {{ .Values.app.namespace }} -o wide
 
 # View Linkerd stats  
 linkerd viz -n {{ .Values.app.namespace }} stat deploy
