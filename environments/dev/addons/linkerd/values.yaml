@@ -12,12 +12,8 @@ certificates:
   rotation:
     enabled: false  # Not needed for dev with automatic certificates
 
-# Use automatic certificate generation for dev
-identity:
-  issuer:
-    scheme: linkerd.io/tls
-    clockSkewAllowance: 20s
-    issuanceLifetime: 24h0m0s
+# Use automatic certificate generation for dev - inherit from default externalCA: true
+# No identity section needed - use defaults
 
 # Lower resource requirements for dev
 resources:

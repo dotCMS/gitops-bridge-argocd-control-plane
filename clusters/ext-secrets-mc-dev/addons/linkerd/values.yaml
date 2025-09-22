@@ -11,12 +11,8 @@ certificates:
   rotation:
     enabled: false  # Not needed for dev
 
-# Ensure automatic certificate generation is used
-identity:
-  issuer:
-    scheme: linkerd.io/tls  # Use automatic certificate generation
-    clockSkewAllowance: 20s
-    issuanceLifetime: 24h0m0s
+# Use automatic certificate generation - inherit from default externalCA: true
+# No identity configuration needed
 
 # Disable any certificate-related configurations from ApplicationSet
 aws: {}
