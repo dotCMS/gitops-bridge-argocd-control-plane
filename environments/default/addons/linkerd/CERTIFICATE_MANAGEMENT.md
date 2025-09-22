@@ -188,3 +188,4 @@ kubectl logs -n cert-manager deployment/cert-manager
 - Use Hardware Security Modules (HSMs) for CA keys
 - Enable audit logging for all certificate operations
 - Implement certificate lifecycle automation
+

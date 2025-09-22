@@ -24,3 +24,4 @@ data:
   # Additional strongDM configuration
   SDM_LISTEN_ADDRESS: "0.0.0.0:5432"
   SDM_RELAY_BIND_ADDRESS: "0.0.0.0"
+

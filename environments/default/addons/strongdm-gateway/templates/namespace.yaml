@@ -8,3 +8,4 @@ metadata:
     app.kubernetes.io/instance: {{ .Values.environment }}
     app.kubernetes.io/component: security
     app.kubernetes.io/part-of: gitops-bridge
+

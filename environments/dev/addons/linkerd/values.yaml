@@ -31,3 +31,4 @@ debugContainer:
 # Policy controller for dev (permissive for easier development)
 policyController:
   defaultPolicy: "allow"  # More permissive in dev
+

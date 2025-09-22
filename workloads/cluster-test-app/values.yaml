@@ -38,3 +38,4 @@ linkerd:
 nodePort:
   enabled: false
   port: 30080
+

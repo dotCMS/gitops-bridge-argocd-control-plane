@@ -217,3 +217,4 @@ linkerd check
 ```
 
 This simple test app provides a **reliable foundation** for cluster validation without unnecessary complexity! 🎯
+

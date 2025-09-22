@@ -101,3 +101,4 @@ spec:
         operator: "Equal"
         value: "amd64"
         effect: "NoSchedule"
+

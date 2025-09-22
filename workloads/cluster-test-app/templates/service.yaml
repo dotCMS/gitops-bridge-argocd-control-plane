@@ -19,3 +19,4 @@ spec:
   selector:
     app.kubernetes.io/name: {{ .Values.app.name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
+

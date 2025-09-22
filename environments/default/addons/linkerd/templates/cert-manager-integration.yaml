@@ -59,3 +59,4 @@ data:
   tls.crt: {{ .Values.certManager.trustAnchor | b64enc }}
   tls.key: {{ .Values.certManager.trustAnchorKey | b64enc }}
 {{- end }}
+

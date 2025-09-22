@@ -10,3 +10,4 @@ metadata:
     {{- if .Values.linkerd.inject }}
     linkerd.io/inject: enabled
     {{- end }}
+

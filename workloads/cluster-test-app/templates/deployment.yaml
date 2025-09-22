@@ -61,3 +61,4 @@ spec:
       - name: html-content
         configMap:
           name: {{ .Values.app.name }}-config
+

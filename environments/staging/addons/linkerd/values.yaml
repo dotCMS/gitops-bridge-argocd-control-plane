@@ -25,3 +25,4 @@ proxy:
 # Security policy for staging (more restrictive)
 policyController:
   defaultPolicy: "deny"
+
