@@ -1,0 +1,9 @@
+aws:
+  region: us-west-2
+
+serviceAccount:
+  name: external-secrets-sa
+
+# Enable secret stores
+secretStores:
+  enabled: true

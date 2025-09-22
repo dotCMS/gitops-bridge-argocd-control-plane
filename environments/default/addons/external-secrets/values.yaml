@@ -1,1 +1,9 @@
-# Helm chart values
+aws:
+  region: us-west-2  # Default region, override per environment
+
+serviceAccount:
+  name: external-secrets-sa
+
+# Secret stores configuration
+secretStores:
+  enabled: true
